@@ -4,6 +4,25 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.functions import Now
 # Create your models here.
 
+sexList = ["Male", "Female"]
+
+class CustomUser(AbstractUser):
+
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+    age = models.IntegerField()
+    sex = models.CharField(max_length=20, choices=sexList)
+    phoneNumber = models.CharField(max_length=20)
+    role = models.CharField(max_length=20)
+    date_joined = models.DateTimeField(db_default=Now())
+
+    class Meta:
+        db_table = "user"
+
+    def __str__(self):
+        return f"{self.username}'s role is {self.role}"
+    
+
 class Inventory(models.Model):
     inventoryId = models.CharField(max_length=100)
     title = models.CharField(max_length=100)
@@ -23,25 +42,13 @@ class Inventory(models.Model):
     discount = models.DecimalField(max_digits=10, decimal_places=2)
     imageUrl = models.CharField(max_length=100)
     status = models.CharField(max_length=50)
+    seller = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     class Meta:
         db_table = "inventory"
 
     def __str__(self):
         return str(self.title)
-    
-
-class CustomUser(AbstractUser):
-    username = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    role = models.CharField(max_length=20)
-    date_joined = models.DateTimeField(db_default=Now())
-
-    class Meta:
-        db_table = "user"
-
-    def __str__(self):
-        return f"{self.username}'s role is {self.role}"
     
 class Order(models.Model):
     orderId = models.CharField(max_length=100)
@@ -56,3 +63,11 @@ class Order(models.Model):
 
     def __str__(self):
         return f"Order ID : {self.orderId},  item {self.inventory.title} from {self.seller.username} by {self.buyer.username} at {self.orderDate}"
+    
+class AddToCart(models.Model):
+    inventory = models.ForeignKey(Inventory, on_delete=models.CASCADE, blank=True, null=True)
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.user.username}'s AddToCart has {self.inventory}"
+    
