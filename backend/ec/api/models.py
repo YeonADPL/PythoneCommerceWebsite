@@ -10,10 +10,10 @@ class CustomUser(AbstractUser):
 
     username = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
-    age = models.IntegerField()
-    sex = models.CharField(max_length=20, choices=sexList)
-    phoneNumber = models.CharField(max_length=20)
-    role = models.CharField(max_length=20)
+    age = models.IntegerField(blank=True, null=True)
+    sex = models.CharField(max_length=20, choices=sexList,blank=True, null=True)
+    phoneNumber = models.CharField(max_length=20,blank=True, null=True)
+    role = models.CharField(max_length=20,blank=True, null=True)
     date_joined = models.DateTimeField(db_default=Now())
 
     class Meta:
