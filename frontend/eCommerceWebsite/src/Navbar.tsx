@@ -1,5 +1,7 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { Link, useNavigate  } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { AuthenticationContext } from './App';
+import axios from 'axios';
 
 interface NavbarProps {
   cartCount?: number;
@@ -7,6 +9,8 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ cartCount = 0 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const { isAuthenticated, setIsAuthenticated } = useContext(AuthenticationContext);
 
   return (
     <nav style={{
@@ -24,10 +28,34 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount = 0 }) => {
           </p>
         </Link>
       </div>
-      <div>
-        <button>Login</button>
-        <button>Sign Up</button>
-        <button>Cart</button>
+      <div> {
+        !isAuthenticated ? (
+        <>
+        <button onClick={()=> navigate('/login')}>Login</button>
+        <button onClick={()=> navigate('/signup')}>Sign Up</button>
+        </>) : (
+          <>
+            <button>Cart</button>
+            <button onClick={async ()=> {
+
+              try{
+                await axios.post('http://localhost:8000/dj-rest-auth/logout');
+              }
+              catch(error) {
+                if (axios.isAxiosError(error)) {
+                console.log("Error response is ", error.response);
+                }
+                console.log("Error is ", error);
+              }
+              finally {
+                setIsAuthenticated(false);
+                navigate('/login');
+              }
+            }}>Logout</button>
+          </>
+        )
+        
+        }
         <button className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >Open</button>
       </div>
@@ -35,10 +63,10 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount = 0 }) => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="absolute top-[64px] left-0 right-0 p-[16px] shadow-lg shadow-grey-300 md:hidden">
-            <button>
+            <button onClick={()=> navigate('/login')}>
               Login
             </button>
-            <button>
+            <button onClick={()=> navigate('/signup')}>
               Sign Up
             </button>
               <button>

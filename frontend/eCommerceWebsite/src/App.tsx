@@ -1,11 +1,16 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './RootLayout';
-import ProductList from './ProductList';
+import MainPage from './MainPage';
 import ProductDetail from './ProductDetail';
 import Login from './Login';
 import SignUp from './Signup';
-import { productsLoader, productDetailLoader } from './loader';
-import { loginAction, signupAction } from './action';
+import UserPage from './UserPage';
+import hotSalesInventoryLoader from './hotSalesInventoryLoader';
+import InventorySearchPage from './InventorySearchPage';
+import { useState , createContext, SetStateAction} from 'react';
+
+
+
 
 const router = createBrowserRouter([
   {
@@ -14,30 +19,42 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <ProductList />,
-        loader: productsLoader,
+        element: <MainPage />,
+        loader : hotSalesInventoryLoader,
       },
       {
-        path: 'product/:id',
+        path: '/inventoryDetail/:id',
         element: <ProductDetail />,
-        loader: productDetailLoader,
       },
       {
-        path: 'login',
+        path: '/login',
         element: <Login />,
-        action: loginAction,
       },
       {
-        path: 'signup',
+        path: '/signup',
         element: <SignUp />,
-        action: signupAction,
+      },
+      {
+        path: '/userpage',
+        element: <UserPage />,
+      },
+      {
+        path: '/inventorysearchpage',
+        element: <InventorySearchPage />,
       },
     ],
   },
 ]);
+export const AuthenticationContext = createContext<{isAuthenticated: boolean, setIsAuthenticated: React.Dispatch<SetStateAction<boolean>>}>({
+  isAuthenticated: false,
+  setIsAuthenticated: () => {},
+});
 
 function App() {
-  return <RouterProvider router={router} />;
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  return <AuthenticationContext.Provider value={{isAuthenticated, setIsAuthenticated}}>
+            <RouterProvider router={router} />
+        </AuthenticationContext.Provider>;
 }
 
 export default App;
