@@ -3,6 +3,7 @@ import { useLoaderData } from 'react-router-dom';
 import { Product } from './typeDefinition';
 import SearchInventoryComponent from './SearchInventoryComponent';
 import InventoryCard from './InventoryCard';
+import { InventoryInterface } from './typeDefinition';
 
 const MainPage = () => {
   const {hotSalesInventoryList,inventoryCategory} = useLoaderData() ;
@@ -13,8 +14,8 @@ const MainPage = () => {
           <SearchInventoryComponent categoryList={inventoryCategory}/>
         </div>
         <div>
-          {hotSalesInventoryList.map((product:{id:number,title:string, name: string, price:number,imageUrl:string, rating:number}) => {
-            return <InventoryCard id={product.id} title={product.title} name={product.name} price={product.price} imageUrl={product.imageUrl} rating={product.rating} />
+          {hotSalesInventoryList.map((product:InventoryInterface) => {
+            return <InventoryCard id={product.id} title={product.title} name={product.name} price={product.price} imageUrl={product.imageUrl} rating={product.rating}  category={product.category} stockQuantity={product.stockQuantity}/>
             }
           )}
         

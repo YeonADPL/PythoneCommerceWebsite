@@ -21,3 +21,25 @@ export interface Product {
     name: string;
     confirmPassword: string;
   }
+
+  export interface InventoryInterface {
+    id:number,
+    title:string, 
+    name: string, 
+    price:number,
+    imageUrl:string, 
+    rating:number,
+    category:string,
+    stockQuantity:number
+  }
+
+  export interface CartInterface {
+    id:number,
+    title:string, 
+    name: string, 
+    price:number,
+    imageUrl:string, 
+    rating:number,
+    category:string,
+    quantity:number
+  }

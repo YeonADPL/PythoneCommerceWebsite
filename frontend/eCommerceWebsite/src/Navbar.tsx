@@ -1,4 +1,4 @@
-import { Link, useNavigate  } from 'react-router-dom';
+import { Link, NavLink, useNavigate  } from 'react-router-dom';
 import { useState, useContext } from 'react';
 import { AuthenticationContext } from './App';
 import axios from 'axios';
@@ -10,7 +10,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ cartCount = 0 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { isAuthenticated, setIsAuthenticated } = useContext(AuthenticationContext);
+  const { userInfo, setUserInfo } = useContext(AuthenticationContext);
 
   return (
     <nav style={{
@@ -29,13 +29,13 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount = 0 }) => {
         </Link>
       </div>
       <div> {
-        !isAuthenticated ? (
+        !userInfo.isAuthenticated ? (
         <>
         <button onClick={()=> navigate('/login')}>Login</button>
         <button onClick={()=> navigate('/signup')}>Sign Up</button>
         </>) : (
           <>
-            <button>Cart</button>
+            <button><NavLink to={`/mycart`}>MyCart</NavLink></button>
             <button onClick={async ()=> {
 
               try{
@@ -48,7 +48,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount = 0 }) => {
                 console.log("Error is ", error);
               }
               finally {
-                setIsAuthenticated(false);
+                setUserInfo({...userInfo, isAuthenticated: false});
                 navigate('/login');
               }
             }}>Logout</button>

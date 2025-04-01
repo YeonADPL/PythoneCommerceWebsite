@@ -1,4 +1,4 @@
-import { Form, useNavigate, NavLink } from 'react-router-dom';
+import { Form, useNavigate, NavLink, useLocation } from 'react-router-dom';
 import { useState, useRef, useContext } from 'react';
 import axios from 'axios';
 import { AuthenticationContext } from './App';
@@ -7,6 +7,7 @@ import { AuthenticationContext } from './App';
 const Login = () => {
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [invalidMessage, setInvalidMessage] = useState<string | null>(null);
 
@@ -15,7 +16,7 @@ const Login = () => {
 
   const signinFormRef = useRef<HTMLFormElement>(null);
 
-  const {  setIsAuthenticated } = useContext(AuthenticationContext);
+  const {  userInfo, setUserInfo } = useContext(AuthenticationContext);
 
   const loginAction = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -25,18 +26,30 @@ const Login = () => {
         return;
     }
 
-    const axiosSignInResponse = await axios.post('http://localhost:8000/api/login', {
-        username: signinName,
-        password: signinPassword
-    });
+    try {
+        const axiosSignInResponse = await axios.post('http://localhost:8000/api/login', {
+            username: signinName,
+            password: signinPassword
+        });
+    
+        if (axiosSignInResponse.status === 200) {
+            // console.log("axiosSignInResponse data is ",axiosSignInResponse.data);
+            setUserInfo({...userInfo, isAuthenticated: true, userId: axiosSignInResponse.data?.user?.pk});
+            console.log("location.state?.from is ", location.state?.from);
+            navigate( location.state?.from || '/UserPage', {state: {userId: axiosSignInResponse.data?.user?.pk}});
+        } 
+    }
 
-    if (axiosSignInResponse.status === 200) {
-        setIsAuthenticated(true);
-        navigate('/UserPage');
-    } else {
-        console.log(axiosSignInResponse);
-        setInvalidMessage("Invalid username or password");
-        signinFormRef.current?.classList.add("formerror");
+    catch(error) {
+        if (axios.isAxiosError(error)) {
+            console.log("SignIn Error response is ", error.response);
+        }
+        else {
+            console.log("SignIn Error is ", error);
+            setInvalidMessage("Invalid username or password");
+            signinFormRef.current?.classList.add("formerror");
+        }
+        
     }
 
   };

@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom';
 const UserPage = () => {
 
   const navigate = useNavigate();
-  const { isAuthenticated } = useContext(AuthenticationContext);
+  const { userInfo} = useContext(AuthenticationContext);
 
   useEffect(() => {
-    if (isAuthenticated === false) {
+    if (userInfo.isAuthenticated === false) {
       navigate('/login');
     }
-  }, [isAuthenticated]);
+  }, [userInfo.isAuthenticated]);
 
   return (
     <div>UserPage</div>
