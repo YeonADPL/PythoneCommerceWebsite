@@ -34,9 +34,26 @@ const Login = () => {
     
         if (axiosSignInResponse.status === 200) {
             // console.log("axiosSignInResponse data is ",axiosSignInResponse.data);
-            setUserInfo({...userInfo, isAuthenticated: true, userId: axiosSignInResponse.data?.user?.pk});
-            console.log("location.state?.from is ", location.state?.from);
-            navigate( location.state?.from || '/UserPage', {state: {userId: axiosSignInResponse.data?.user?.pk}});
+            const getRoleResponse = await axios.get(`http://localhost:8000/api/userinfo?id=${axiosSignInResponse.data?.user?.pk}`);
+
+            if (getRoleResponse.status === 200) {
+                console.log("getRoleResponse data is ", getRoleResponse.data);
+                console.log("Role is ", getRoleResponse.data.role);
+                const role = getRoleResponse.data.role;
+                if (role !== "Buyer" && role !== "Seller") {
+                    setInvalidMessage("Invalid role, please log in again");
+                    signinFormRef.current?.classList.add("formerror");
+                    return;
+                }
+                setUserInfo({...userInfo, isAuthenticated: true, userId: axiosSignInResponse.data?.user?.pk, role: role});
+                console.log("location.state?.from is ", location.state?.from);
+                navigate( location.state?.from || '/UserPage', {state: {userId: axiosSignInResponse.data?.user?.pk}});
+            }
+            else {  
+                console.log("Unable to get role, please log in again");
+                setInvalidMessage("Unable to get role, please log in again");
+            }
+            
         } 
     }
 

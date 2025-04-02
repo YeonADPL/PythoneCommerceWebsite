@@ -35,7 +35,12 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount = 0 }) => {
         <button onClick={()=> navigate('/signup')}>Sign Up</button>
         </>) : (
           <>
-            <button><NavLink to={`/mycart`}>MyCart</NavLink></button>
+            {
+              userInfo.role === 'Buyer' && (
+                <button><NavLink to={`/mycart`}>MyCart</NavLink></button>
+              )
+            }
+            <button onClick={()=> {navigate('/myorder');}} >MyOrder</button>
             <button onClick={async ()=> {
 
               try{
@@ -48,7 +53,7 @@ const Navbar: React.FC<NavbarProps> = ({ cartCount = 0 }) => {
                 console.log("Error is ", error);
               }
               finally {
-                setUserInfo({...userInfo, isAuthenticated: false});
+                setUserInfo({...userInfo, isAuthenticated: false, role: null, userId: null});
                 navigate('/login');
               }
             }}>Logout</button>

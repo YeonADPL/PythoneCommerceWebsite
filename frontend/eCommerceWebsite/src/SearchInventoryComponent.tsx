@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from 'react'
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import clsx from 'clsx';
 
 const SearchInventoryComponent = ({categoryList}:{categoryList:{category:string}[]}) => {
   
@@ -57,7 +58,7 @@ const SearchInventoryComponent = ({categoryList}:{categoryList:{category:string}
                     </option>
                 ))}
             </select>
-            <button type="submit" className='p-2' disabled={ search === "" ? true : false }><img src="/magnifier.png" width={32} height={32} alt="Find" /></button>
+            <button type="submit" className={clsx('p-2 disabled:opacity-20')} disabled={ search === "" ? true : false }><img src="/magnifier.png" width={32} height={32} alt="Find" /></button>
         </form>
         {isFocus && (<div className='absolute top-[45px] m-[5px] z-15 bg-white'>
             <ul>

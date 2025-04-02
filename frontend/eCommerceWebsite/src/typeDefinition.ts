@@ -43,3 +43,20 @@ export interface Product {
     category:string,
     quantity:number
   }
+  export interface OrderInterface {
+    orderId:number,
+    inventory:{
+      title:string,
+      id:number,
+      name:string,
+      price:number,
+      imageUrl:string,
+      rating:number,
+      category:string
+      },
+    buyer:string,
+    seller:string,
+    status:string,
+    orderDate:string,
+    quantity:number
+  }

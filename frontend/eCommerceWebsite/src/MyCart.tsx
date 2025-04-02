@@ -1,10 +1,11 @@
-import {useState, useEffect, useContext} from 'react';
+import {useState, useEffect, useContext, useRef} from 'react';
 import { AuthenticationContext } from './App';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import axiosWithCredentials,{requestInterceptor, responseInterceptor} from './axiosWithCredentials';
 import { CartInterface,InventoryInterface } from './typeDefinition';
 import AddToCartCard from './AddToCartCard';
+import './App.css';
 
 
 const MyCart = () => {
@@ -13,6 +14,7 @@ const MyCart = () => {
     const navigate = useNavigate();
     const [addToCartList, setAddToCartList] = useState<CartInterface[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
+    const loaderRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
 
@@ -74,13 +76,42 @@ const MyCart = () => {
 
     const makeOrder = async () => {
         // Make Order
-        
+        loaderRef.current?.classList.add('loader');
+        console.log("Inside Make Order");
+        console.log("Total Price is ", totalPrice);
+        console.log("Add to Cart List is ", addToCartList);
+        try {
+            const makeOrderResponse = await axios.post('http://localhost:8000/api/makeOrder', {
+                user: userInfo.userId,
+                totalPrice: totalPrice,
+                orderList: addToCartList
+            });
+
+            if (makeOrderResponse.status === 201) {
+                console.log("Make Order Response is ", makeOrderResponse.data);
+                setAddToCartList([]);
+                setTotalPrice(0);
+                navigate('/myorder');
+            }
+        }
+        catch(error) {
+            if (axios.isAxiosError(error)) {
+                console.log("Error response is ", error.response);
+            }
+            else {
+                console.log("Error is ", error);
+            }
+        }
+        finally {
+            loaderRef.current?.classList.remove('loader');
+        }  
+
     }
 
   return (
     <div className='relative flex flex-col justify-center items-center'>
         <div>MyCart</div>
-        <div>
+        <div className='w-full'>
           {addToCartList.map((product:CartInterface) => {
             return <AddToCartCard key={Number(product.id)} id={product.id} title={product.title} name={product.name} price={product.price} imageUrl={product.imageUrl} rating={product.rating}  category={product.category} quantity={product.quantity} cartList={addToCartList} setCartList={setAddToCartList}/>
             }
@@ -93,6 +124,7 @@ const MyCart = () => {
                 <span className='text-6xl font-bold'>{totalPrice}</span>
             </div>
             <button onClick={makeOrder}>Make Order</button>
+            <div ref={loaderRef} ></div>
         </div>
     </div>
   )

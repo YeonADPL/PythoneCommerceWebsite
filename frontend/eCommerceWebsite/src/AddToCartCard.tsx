@@ -1,7 +1,5 @@
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { useContext } from 'react';
-import { AuthenticationContext } from './App';
-import axios from 'axios';
+import { NavLink} from 'react-router-dom';
+
 import { CartInterface } from './typeDefinition';
 
 
@@ -18,16 +16,12 @@ const AddToCartCard = ({id,title, name, rating, price,imageUrl,category,quantity
     setCartList:React.Dispatch<React.SetStateAction<CartInterface[]>>
 }) => {
 
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { userInfo } = useContext(AuthenticationContext);
 
-
-  const removeAction = async () => {
-    
+  const removeAction =  () => {
+    setCartList(cartList.filter((item) => item.id !== id));
   }
 
-  const increaseQuantity = async () => {
+  const increaseQuantity =  () => {
     setCartList(cartList.map((item) => {
       if (item.id === id) {
         return {
@@ -41,7 +35,7 @@ const AddToCartCard = ({id,title, name, rating, price,imageUrl,category,quantity
     }));
   }
 
-  const decreaseQuantity = async () => {
+  const decreaseQuantity =  () => {
     setCartList(cartList
       .map((item) => {
         if (item.id === id) {

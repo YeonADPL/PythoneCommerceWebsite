@@ -9,6 +9,8 @@ import hotSalesInventoryLoader from './hotSalesInventoryLoader';
 import InventorySearchPage from './InventorySearchPage';
 import { useState , createContext, SetStateAction} from 'react';
 import MyCart from './MyCart';
+import MyOrder from './MyOrder';
+import HistoricalOrders from './HistoricalOrders';
 
 
 
@@ -47,6 +49,14 @@ const router = createBrowserRouter([
         path: '/mycart',
         element: <MyCart />,
       },
+      {
+        path: '/myorder',
+        element: <MyOrder />,
+      },
+      {
+        path: '/historicalOrders',
+        element: <HistoricalOrders />,
+      },
     ],
   },
 ]);
@@ -54,14 +64,14 @@ const router = createBrowserRouter([
 //   isAuthenticated: false,
 //   setIsAuthenticated: () => {},
 // });
-export const AuthenticationContext = createContext<{userInfo: {userId: null, isAuthenticated: boolean}, setUserInfo: React.Dispatch<SetStateAction<{userId: null, isAuthenticated: boolean}>>}>({
-  userInfo:{userId: null, isAuthenticated: false} ,
+export const AuthenticationContext = createContext<{userInfo: {userId: null, role:null, isAuthenticated: boolean}, setUserInfo: React.Dispatch<SetStateAction<{userId: null, role:null,  isAuthenticated: boolean}>>}>({
+  userInfo:{userId: null, role:null, isAuthenticated: false} ,
   setUserInfo: () => {},
 });
 
 function App() {
   // const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userInfo, setUserInfo] = useState({userId: null, isAuthenticated: false});
+  const [userInfo, setUserInfo] = useState({userId: null, role:null, isAuthenticated: false});
   return <AuthenticationContext.Provider value={{userInfo, setUserInfo}}>
             <RouterProvider router={router} />
         </AuthenticationContext.Provider>;

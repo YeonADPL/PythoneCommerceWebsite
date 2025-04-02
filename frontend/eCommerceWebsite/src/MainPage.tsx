@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
-import { Product } from './typeDefinition';
 import SearchInventoryComponent from './SearchInventoryComponent';
 import InventoryCard from './InventoryCard';
 import { InventoryInterface } from './typeDefinition';
