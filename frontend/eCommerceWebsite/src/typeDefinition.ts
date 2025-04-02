@@ -60,3 +60,25 @@ export interface Product {
     orderDate:string,
     quantity:number
   }
+
+  export interface InventoryDetailInterface {
+    id : number,
+    inventoryId : string,
+    title : string,
+    name : string,
+    description : string,
+    brand : string,
+    category : string,
+    color: string[],
+    material : string[],
+    hotSalesScore : number,
+    weight : number,
+    rating : number,
+    price : number,
+    quantity : number,
+    dimensions : Record<string,number>
+    discount : number,
+    imageUrl : string,
+    status : string,
+    seller : number
+  }

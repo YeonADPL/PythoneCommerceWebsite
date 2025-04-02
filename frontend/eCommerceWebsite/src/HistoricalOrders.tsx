@@ -5,6 +5,7 @@ import axios from 'axios';
 import axiosWithCredentials,{requestInterceptor, responseInterceptor} from './axiosWithCredentials';
 import { OrderInterface } from './typeDefinition';
 import HistoricalOrderCard from './HistoricalOrderCard';
+import PaginationComponent from './PaginationComponent';
 
 const HistoricalOrders = () => {
 
@@ -61,24 +62,27 @@ const HistoricalOrders = () => {
             <span className='absolute left-[10px] ml-[5px]'><NavLink to="/myorder">Back</NavLink></span>
         </div>
         <div className='w-full flex flex-col justify-center items-center'>
-          {  historicalOrderList.length > 0 ? historicalOrderList.map((order:OrderInterface) => {
-            return <HistoricalOrderCard key={order.orderId} 
-                        orderId={order.orderId}
-            title = {order.inventory.title}
-            inventoryId = {order.inventory.id}
-            name= {order.inventory.name}
-            price= {order.inventory.id}
-            imageUrl= {order.inventory.imageUrl}
-            rating= {order.inventory.rating}
-            category= {order.inventory.category}
-            buyer= {order.buyer}
-            seller= {order.seller}
-            status= {order.status}
-            orderDate= {order.orderDate}
-            orderQuantity= {order.quantity}
-            role= {userInfo.role} />
-            }
-          ) : <div className='text-3xl flex justify-center items-center font-bold mt-[10px]'>No Historical Order</div>}
+          {  historicalOrderList.length > 0 ? 
+          <PaginationComponent array={historicalOrderList.map((order:OrderInterface) => {
+                return <HistoricalOrderCard key={order.orderId} 
+                            orderId={order.orderId}
+                title = {order.inventory.title}
+                inventoryId = {order.inventory.id}
+                name= {order.inventory.name}
+                price= {order.inventory.id}
+                imageUrl= {order.inventory.imageUrl}
+                rating= {order.inventory.rating}
+                category= {order.inventory.category}
+                buyer= {order.buyer}
+                seller= {order.seller}
+                status= {order.status}
+                orderDate= {order.orderDate}
+                orderQuantity= {order.quantity}
+                role= {userInfo.role} />
+                })} 
+            itemsPerPage={2} />
+          
+           : <div className='text-3xl flex justify-center items-center font-bold mt-[10px]'>No Historical Order</div>}
         
         </div>
         

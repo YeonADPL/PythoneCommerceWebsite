@@ -3,7 +3,7 @@ import { useContext,useState } from 'react';
 import { AuthenticationContext } from './App';
 import axios from 'axios';
 
-const OrderCard = ({orderId,inventoryId,title, name, rating, price,imageUrl,category,orderQuantity,buyer,seller,status,orderDate,role}:{
+const HistoricalOrderCard = ({orderId,inventoryId,title, name, rating, price,imageUrl,category,orderQuantity,buyer,seller,status,orderDate,role}:{
         orderId:number,
         title:string,
         inventoryId:number,
@@ -24,7 +24,7 @@ const OrderCard = ({orderId,inventoryId,title, name, rating, price,imageUrl,cate
     //["Pending Seller's Confirmation","Cancelled by Buyer","Cancelled by Seller","Confirmed by Seller","Shipped","Delivered by Seller","Received by Buyer"]
     
     return (
-      <div key={inventoryId}className='flex flex-col justify-center items-center border-3 p-[10px] rounded-sm m-[10px] w-[90%]'>
+      <div key={inventoryId} className='flex flex-col justify-center items-center border-3 p-[10px] rounded-sm m-[10px] w-[90%]'>
             <div className='border-none rounded-sm overflow-hidden'><img src={`/${imageUrl}.jpg`} width={300} height={300} alt={category}/></div>
             <div><NavLink to={`/inventoryDetail/${inventoryId}`}>{title}</NavLink></div>
             <div>{name}</div>
@@ -41,4 +41,4 @@ const OrderCard = ({orderId,inventoryId,title, name, rating, price,imageUrl,cate
 
 }
 
-export default OrderCard
+export default HistoricalOrderCard

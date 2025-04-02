@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './RootLayout';
 import MainPage from './MainPage';
-import ProductDetail from './ProductDetail';
+import InventoryDetail from './InventoryDetail';
 import Login from './Login';
 import SignUp from './Signup';
 import UserPage from './UserPage';
@@ -11,9 +11,6 @@ import { useState , createContext, SetStateAction} from 'react';
 import MyCart from './MyCart';
 import MyOrder from './MyOrder';
 import HistoricalOrders from './HistoricalOrders';
-
-
-
 
 const router = createBrowserRouter([
   {
@@ -27,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/inventoryDetail/:id',
-        element: <ProductDetail />,
+        element: <InventoryDetail />,
       },
       {
         path: '/login',
