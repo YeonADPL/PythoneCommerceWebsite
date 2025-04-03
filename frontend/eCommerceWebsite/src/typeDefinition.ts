@@ -30,7 +30,8 @@ export interface Product {
     imageUrl:string, 
     rating:number,
     category:string,
-    stockQuantity:number
+    stockQuantity:number,
+    color:string[]
   }
 
   export interface CartInterface {
@@ -41,7 +42,9 @@ export interface Product {
     imageUrl:string, 
     rating:number,
     category:string,
-    quantity:number
+    quantity:number,
+    colorList: string[],
+    selectedColor : string
   }
   export interface OrderInterface {
     orderId:number,
@@ -58,7 +61,8 @@ export interface Product {
     seller:string,
     status:string,
     orderDate:string,
-    quantity:number
+    quantity:number,
+    selectedColor : string
   }
 
   export interface InventoryDetailInterface {

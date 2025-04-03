@@ -76,6 +76,7 @@ const HistoricalOrders = () => {
                 buyer= {order.buyer}
                 seller= {order.seller}
                 status= {order.status}
+                selectedColor = {order.selectedColor}
                 orderDate= {order.orderDate}
                 orderQuantity= {order.quantity}
                 role= {userInfo.role} />

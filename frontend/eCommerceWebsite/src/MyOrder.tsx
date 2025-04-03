@@ -81,6 +81,7 @@ const MyOrder = () => {
             role= {userInfo.role} 
             orderList = {orderList}
             setOrderList = {setOrderList }
+            selectedColor = {order.selectedColor}
             />
             }
           ): <div className='text-3xl flex justify-center items-center font-bold mt-[10px]'>No Pending Order</div>}

@@ -27,7 +27,7 @@ const MyCart = () => {
 
                 if ( getMyCartResponse.status === 200) {
                     console.log("My Cart Response is ", getMyCartResponse.data);
-                    const inventoryList = getMyCartResponse.data.map((i: {inventory:InventoryInterface[],quantity:number}) => {
+                    const inventoryList = getMyCartResponse.data.map((i: {inventory:InventoryInterface[],quantity:number,selectedColor:string}) => {
                         return {
                             id: i.inventory[0].id,
                             title:i.inventory[0].title, 
@@ -36,7 +36,9 @@ const MyCart = () => {
                             imageUrl:i.inventory[0].imageUrl, 
                             rating:i.inventory[0].rating,
                             category:i.inventory[0].category,
-                            quantity:i.quantity
+                            quantity:i.quantity,
+                            colorList : i.inventory[0].color,
+                            selectedColor:i.selectedColor
                         }
                     });
                     console.log("Inventory List is ", inventoryList);
@@ -110,12 +112,14 @@ const MyCart = () => {
 
   return (
     <div className='relative flex flex-col justify-center items-center'>
-        <div>MyCart</div>
+        <div className='text-5xl font-bold'>MyCart</div>
         <div className='w-full'>
-          {addToCartList.map((product:CartInterface) => {
-            return <AddToCartCard key={Number(product.id)} id={product.id} title={product.title} name={product.name} price={product.price} imageUrl={product.imageUrl} rating={product.rating}  category={product.category} quantity={product.quantity} cartList={addToCartList} setCartList={setAddToCartList}/>
-            }
-          )}
+          { addToCartList.length > 0 ? addToCartList.map((product:CartInterface) => {
+            return <AddToCartCard key={Number(product.id)} id={product.id} title={product.title} name={product.name} price={product.price} imageUrl={product.imageUrl} rating={product.rating}  category={product.category} quantity={product.quantity} colorList={product.colorList} currentSelectedColor={product.selectedColor} cartList={addToCartList} setCartList={setAddToCartList}/>
+            } 
+            
+            ): <div className='text-3xl flex justify-center items-center font-bold mt-[10px]'>No Cart</div> 
+          }
         
         </div>
         <div className='fixed bottom-0 h-[100px] w-full bg-cyan-300 border-5 rounded-sm flex justify-around items-center'>

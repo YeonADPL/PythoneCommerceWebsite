@@ -11,7 +11,7 @@ const InventorySearchPage = () => {
     const searchTitle = searchParams.get("title");
 
     const [categoryList, setCategoryList] = useState<{category:string}[]>([]);
-    const [inventoryList, setInventoryList] = useState<{id:number,title:string, name: string, price:number,imageUrl:string, rating:number, category:string, stockQuantity:number}[]>([]);
+    const [inventoryList, setInventoryList] = useState<{id:number,title:string, name: string, price:number,imageUrl:string, rating:number, category:string, stockQuantity:number, color:string[]}[]>([]);
 
     async function searchInventory() {
         console.log("Searching Inventory");
@@ -49,8 +49,8 @@ const InventorySearchPage = () => {
     <div>
         <div><SearchInventoryComponent categoryList={categoryList}/></div>
         {
-            inventoryList && inventoryList.map((product:{id:number,title:string, name: string, price:number,imageUrl:string, rating:number, category:string,stockQuantity:number}) => {
-                return <InventoryCard key={product.id} id={product.id} title={product.title} name={product.name} price={product.price} imageUrl={product.imageUrl} rating={product.rating} category={product.category} stockQuantity={product.stockQuantity}/>
+            inventoryList && inventoryList.map((product:{id:number,title:string, name: string, price:number,imageUrl:string, rating:number, category:string,stockQuantity:number,color:string[]}) => {
+                return <InventoryCard key={product.id} id={product.id} title={product.title} name={product.name} price={product.price} imageUrl={product.imageUrl} rating={product.rating} category={product.category} stockQuantity={product.stockQuantity} color={product.color}/>
             }
             )
         }

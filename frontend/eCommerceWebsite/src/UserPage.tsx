@@ -14,7 +14,7 @@ const UserPage = () => {
   }, [userInfo.isAuthenticated]);
 
   return (
-    <div>UserPage</div>
+    <div className='text-5xl font-bold'>User Page</div>
   )
 }
 

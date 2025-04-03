@@ -91,7 +91,7 @@ const InventoryDetail = () => {
           <div><span>Dimension(Width x Height x Length)(cm): </span><span>{inventoryDetail.dimensions.width} x {inventoryDetail.dimensions.height} x {inventoryDetail.dimensions.length}</span></div>
           <div><span>Weight : </span>{inventoryDetail.weight} kg</div>
           <div><span>Rating : </span>{inventoryDetail.rating}</div>
-          <div><span>Price : $ </span>{inventoryDetail.price}</div>
+          <div><span>Unit Price : $ </span>{inventoryDetail.price}</div>
           <div><span>In Stock Quantity : </span>{inventoryDetail.quantity}</div>
           <div><span>Status : </span>{inventoryDetail.status}</div>
           <div><span>Seller : </span>{inventoryDetail.seller}</div>

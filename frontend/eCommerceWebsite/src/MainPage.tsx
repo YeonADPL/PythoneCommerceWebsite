@@ -14,7 +14,7 @@ const MainPage = () => {
         </div>
         <div>
           {hotSalesInventoryList.map((product:InventoryInterface) => {
-            return <InventoryCard id={product.id} title={product.title} name={product.name} price={product.price} imageUrl={product.imageUrl} rating={product.rating}  category={product.category} stockQuantity={product.stockQuantity}/>
+            return <InventoryCard key={product.id} id={product.id} title={product.title} name={product.name} price={product.price} imageUrl={product.imageUrl} rating={product.rating}  category={product.category} stockQuantity={product.stockQuantity} color={product.color} / >
             }
           )}
         

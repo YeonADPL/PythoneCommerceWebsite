@@ -1,15 +1,17 @@
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AuthenticationContext } from './App';
 import axios from 'axios';
 import { InventoryInterface } from './typeDefinition';
+import clsx from 'clsx';
 
 
-const InventoryCard = ({id,title, name, rating, price,imageUrl,category,stockQuantity}:InventoryInterface) => {
+const InventoryCard = ({id,title, name, rating, price,imageUrl,category,stockQuantity,color}:InventoryInterface) => {
 
   const navigate = useNavigate();
   const location = useLocation();
   const { userInfo } = useContext(AuthenticationContext);
+  const [ selectedColor, setSelectedColor] = useState<string>("")
 
 
   const addToCart = async () => {
@@ -23,7 +25,8 @@ const InventoryCard = ({id,title, name, rating, price,imageUrl,category,stockQua
         const addToCartAction = await axios.post('http://localhost:8000/api/addToCart', {
           user: userInfo.userId,
           inventory: id,
-          quantity: 1
+          quantity: 1,
+          selectedColor
         });
   
         console.log("Add to Cart Response is ", addToCartAction.data);
@@ -45,9 +48,10 @@ const InventoryCard = ({id,title, name, rating, price,imageUrl,category,stockQua
         <div><NavLink to={`/inventoryDetail/${id}`}>{title}</NavLink></div>
         <div>{name}</div>
         <div><span>Category : </span>{category}</div>
+        <div><span>Color : </span>{color.map(c=> <button key={c} className={clsx(selectedColor === c ? "text-red-500" : "text-black")} onClick={()=> setSelectedColor(c)}>{c}</button>)}</div>
         <div><span>Rating : </span>{rating}</div>
-        <div><span>$ </span>{price}</div>
-        <div><button onClick={addToCart}>Add to Cart</button></div>
+        <div><span>Unit Price : $ </span>{price}</div>
+        <div><button onClick={addToCart} disabled={ selectedColor=== "" ? true : false}>Add to Cart</button></div>
     </div>
   )
 }
