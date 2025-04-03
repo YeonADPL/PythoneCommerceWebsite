@@ -1,5 +1,5 @@
 import {useState, useEffect, useContext} from 'react';
-import { AuthenticationContext } from './App';
+import { AuthenticationContext } from './RootLayout';
 import { useNavigate, NavLink } from 'react-router-dom';
 import axios from 'axios';
 import axiosWithCredentials,{requestInterceptor, responseInterceptor} from './axiosWithCredentials';
@@ -24,6 +24,8 @@ const HistoricalOrders = () => {
 
                 if ( getMyOrderResponse.status === 200) {
                     console.log("My Cart Response is ", getMyOrderResponse.data);
+                    // const sortedByDateHistoricalOrderList = getMyOrderResponse.data.sort((a:OrderInterface,b:OrderInterface)=> {return b.orderDate.getTime - Number(a.orderDate)});
+                    // console.log("sortedByDateHistoricalOrderList is ", sortedByDateHistoricalOrderList);
                     setHistoricalOrderList(getMyOrderResponse.data);
                 }
                     
@@ -59,7 +61,7 @@ const HistoricalOrders = () => {
     <div className='relative flex flex-col justify-center items-center border-2 border-grey-300 rounded-sm m-[10px] p-[10px] min-height-[1000px]'>
         <div className='relative w-full flex justify-center items-center'>
             <span className='text-5xl font-bold'>Historical Order</span>
-            <span className='absolute left-[10px] ml-[5px]'><NavLink to="/myorder">Back</NavLink></span>
+            <span className='absolute left-[10px] ml-[5px] text-2xl'><NavLink to="/myorder">Back</NavLink></span>
         </div>
         <div className='w-full flex flex-col justify-center items-center'>
           {  historicalOrderList.length > 0 ? 
@@ -69,7 +71,7 @@ const HistoricalOrders = () => {
                 title = {order.inventory.title}
                 inventoryId = {order.inventory.id}
                 name= {order.inventory.name}
-                price= {order.inventory.id}
+                price= {order.inventory.price}
                 imageUrl= {order.inventory.imageUrl}
                 rating= {order.inventory.rating}
                 category= {order.inventory.category}

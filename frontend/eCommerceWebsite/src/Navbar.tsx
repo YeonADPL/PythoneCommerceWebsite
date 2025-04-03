@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate  } from 'react-router-dom';
 import { useState, useContext } from 'react';
-import { AuthenticationContext } from './App';
+import { AuthenticationContext } from './RootLayout';
 import axios from 'axios';
 import SearchInventoryComponent from './SearchInventoryComponent';
 

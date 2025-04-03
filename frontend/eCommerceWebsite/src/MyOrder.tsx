@@ -1,5 +1,5 @@
 import {useState, useEffect, useContext} from 'react';
-import { AuthenticationContext } from './App';
+import { AuthenticationContext } from './RootLayout';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import axiosWithCredentials,{requestInterceptor, responseInterceptor} from './axiosWithCredentials';
@@ -69,7 +69,7 @@ const MyOrder = () => {
             title = {order.inventory.title}
             inventoryId = {order.inventory.id}
             name= {order.inventory.name}
-            price= {order.inventory.id}
+            price= {order.inventory.price}
             imageUrl= {order.inventory.imageUrl}
             rating= {order.inventory.rating}
             category= {order.inventory.category}

@@ -1,11 +1,12 @@
 import {useState, useEffect, useContext, useRef} from 'react';
-import { AuthenticationContext } from './App';
-import { useNavigate } from 'react-router-dom';
+import { AuthenticationContext } from './RootLayout';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import axiosWithCredentials,{requestInterceptor, responseInterceptor} from './axiosWithCredentials';
 import { CartInterface,InventoryInterface } from './typeDefinition';
 import AddToCartCard from './AddToCartCard';
 import './App.css';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const MyCart = () => {
@@ -15,6 +16,7 @@ const MyCart = () => {
     const [addToCartList, setAddToCartList] = useState<CartInterface[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
     const loaderRef = useRef<HTMLDivElement>(null);
+    const locationHook = useLocation();
 
     useEffect(() => {
 
@@ -56,6 +58,10 @@ const MyCart = () => {
             }
         }
         fetchMyCart();
+
+        if ( locationHook.state?.addToast) {
+            toast.success('Successfully Add to Cart!', { removeDelay: 3000 });
+        }
 
         return () => {
             controller.abort(); // Request will cancel and abort when unmounts
@@ -112,10 +118,11 @@ const MyCart = () => {
 
   return (
     <div className='relative flex flex-col justify-center items-center'>
+        <Toaster />
         <div className='text-5xl font-bold'>MyCart</div>
         <div className='w-full'>
           { addToCartList.length > 0 ? addToCartList.map((product:CartInterface) => {
-            return <AddToCartCard key={Number(product.id)} id={product.id} title={product.title} name={product.name} price={product.price} imageUrl={product.imageUrl} rating={product.rating}  category={product.category} quantity={product.quantity} colorList={product.colorList} currentSelectedColor={product.selectedColor} cartList={addToCartList} setCartList={setAddToCartList}/>
+            return <AddToCartCard key={product.id+product.selectedColor} id={product.id} title={product.title} name={product.name} price={product.price} imageUrl={product.imageUrl} rating={product.rating}  category={product.category} quantity={product.quantity} colorList={product.colorList} currentSelectedColor={product.selectedColor} cartList={addToCartList} setCartList={setAddToCartList}/>
             } 
             
             ): <div className='text-3xl flex justify-center items-center font-bold mt-[10px]'>No Cart</div> 
@@ -125,7 +132,11 @@ const MyCart = () => {
         <div className='fixed bottom-0 h-[100px] w-full bg-cyan-300 border-5 rounded-sm flex justify-around items-center'>
             <div><span className='text-5xl'>Total Price : $</span></div> 
             <div>
-                <span className='text-6xl font-bold'>{totalPrice}</span>
+                <span className='text-6xl font-bold'>{
+                // (Math.floor((totalPrice) * 100) / 100).toFixed(2)}
+                totalPrice.toFixed(2)
+                }
+                </span>
             </div>
             <button onClick={makeOrder}>Make Order</button>
             <div ref={loaderRef} ></div>

@@ -1,7 +1,8 @@
-import React,{useState, useEffect} from 'react'
-import { NavLink } from 'react-router-dom';
+import React,{useState, useEffect, useContext} from 'react'
+import { NavLink , useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import clsx from 'clsx';
+import { AuthenticationContext } from './RootLayout';
 
 const SearchInventoryComponent = ({categoryList}:{categoryList:{category:string}[]}) => {
   
@@ -10,6 +11,9 @@ const SearchInventoryComponent = ({categoryList}:{categoryList:{category:string}
     const [isFocus, setIsFocus] = useState(false);
     const [matchResult, setMatchResult] = useState<{id:number, title:string}[]>([]);
     const [inventoryInfoList, setInventoryInfoList] = useState<{id:number, title:string}[]>([]);
+    const {userInfo} = useContext(AuthenticationContext)
+
+    const navigate = useNavigate();
 
     const handleFocus = () => {
         setIsFocus(true);
@@ -19,6 +23,7 @@ const SearchInventoryComponent = ({categoryList}:{categoryList:{category:string}
     };
 
     useEffect(()=> {
+        console.log("Inside useEffect of SearchInventoryComponent, userInfo is ", JSON.stringify(userInfo));
         async function fetchInventoryList() {
             const fetchInventoryResponse = await axios.get('http://localhost:8000/api/getInventoryTitleList');
             const inventoryInfoList = fetchInventoryResponse.data;
@@ -42,10 +47,16 @@ const SearchInventoryComponent = ({categoryList}:{categoryList:{category:string}
         setMatchResult(matchResultFilter);
     },[search]);
 
+//action={`/inventorysearchpage`}
+
+    const formSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        navigate(`/inventorysearchpage?title=${search}&category=${category}`);
+    }
 
   return (
     <div className='relative w-full max-w-[500px] m-auto'>
-        <form action={`/inventorysearchpage`} className='w-full h-min flex border-3 rounded-md justify-between gap-[2px]'>
+        <form onSubmit={formSubmit} className='w-full h-min flex border-3 rounded-md justify-between gap-[2px]'>
             <input onFocus={handleFocus} onBlur={handleBlur} name="title" className='min-h-auto w-full m-[10px] outline-none caret-cyan-900' placeholder='Search by Name' value={ search || "" } onChange={(event:React.FormEvent<HTMLInputElement>)=> {
                     setSearch(event.currentTarget.value);
                 }

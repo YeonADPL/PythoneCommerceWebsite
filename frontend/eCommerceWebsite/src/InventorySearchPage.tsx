@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import SearchInventoryComponent from './SearchInventoryComponent';
@@ -33,7 +33,7 @@ const InventorySearchPage = () => {
     }
 
     useEffect(() => {
-        console.log("Category : ", searchCategory);
+        //console.log("Category : ", searchCategory);
         
         async function fetchCategoryList() {
             const fetchCategoryResponse = await axios.get('http://localhost:8000/api/getInventoryCategory');
@@ -46,6 +46,10 @@ const InventorySearchPage = () => {
         searchInventory();
     }, []);
 
+    useEffect(()=>{
+        searchInventory();
+    },[searchParams]);
+
   return (
     <div>
         {/* <div><SearchInventoryComponent categoryList={categoryList}/></div> */}
@@ -54,9 +58,8 @@ const InventorySearchPage = () => {
             <PaginationComponent 
                 array={ inventoryList.map((product:{id:number,title:string, name: string, price:number,imageUrl:string, rating:number, category:string,stockQuantity:number,color:string[]}) => {
                     return <InventoryCard key={product.id} id={product.id} title={product.title} name={product.name} price={product.price} imageUrl={product.imageUrl} rating={product.rating} category={product.category} stockQuantity={product.stockQuantity} color={product.color}/>
-                        }
-                
-                )
+                            }
+                        )
                     }
                 itemsPerPage={5} />
         } 

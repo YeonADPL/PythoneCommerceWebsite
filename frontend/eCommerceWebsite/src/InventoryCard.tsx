@@ -1,9 +1,11 @@
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { useContext, useState } from 'react';
-import { AuthenticationContext } from './App';
+// import { AuthenticationContext } from './App';
+import { AuthenticationContext } from './RootLayout';
 import axios from 'axios';
 import { InventoryInterface } from './typeDefinition';
 import clsx from 'clsx';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const InventoryCard = ({id,title, name, rating, price,imageUrl,category,stockQuantity,color}:InventoryInterface) => {
@@ -28,8 +30,11 @@ const InventoryCard = ({id,title, name, rating, price,imageUrl,category,stockQua
           quantity: 1,
           selectedColor
         });
-  
-        console.log("Add to Cart Response is ", addToCartAction.data);
+        
+        if (addToCartAction.status === 201) {
+          console.log("Add to Cart Response is ", addToCartAction.data);
+          toast.success('Successfully Add to Cart!');
+        }
       }
       catch(error) {
         if (axios.isAxiosError(error)) {
@@ -44,6 +49,7 @@ const InventoryCard = ({id,title, name, rating, price,imageUrl,category,stockQua
   }
   return (
     <div key={id}className='border-3 p-[10px] rounded-sm m-[10px] flex flex-col justify-center items-center w-[90%] min-h-[500px] h-[600px]'>
+        <Toaster />
         <div className='border-none rounded-sm overflow-hidden'><img src={`/${imageUrl}.jpg`} width={300} height={300} alt={category} /></div>
         <div className='text-3xl font-bold'><NavLink to={`/inventoryDetail/${id}`}>{title}</NavLink></div>
         <div>{name}</div>
@@ -51,7 +57,7 @@ const InventoryCard = ({id,title, name, rating, price,imageUrl,category,stockQua
         <div><span>Color : </span>{color.map(c=> <button key={c} className={clsx(selectedColor === c ? "text-red-500" : "text-black")} onClick={()=> setSelectedColor(c)}>{c}</button>)}</div>
         <div><span>Rating : </span>{rating}</div>
         <div><span>Unit Price : $ </span>{price}</div>
-        <div><button onClick={addToCart} disabled={ selectedColor=== "" ? true : false}>Add to Cart</button></div>
+        <div><button className="disabled:opacity-20" onClick={addToCart} disabled={ selectedColor=== "" ? true : false}>Add to Cart</button></div>
     </div>
   )
 }

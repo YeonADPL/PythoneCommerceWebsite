@@ -1,6 +1,6 @@
-import { NavLink, useNavigate, useLocation , useParams} from 'react-router-dom';
+import { NavLink, useNavigate , useParams} from 'react-router-dom';
 import { useContext,useState, useEffect } from 'react';
-import { AuthenticationContext } from './App';
+import { AuthenticationContext } from './RootLayout';
 import axios from 'axios';
 import type {InventoryDetailInterface} from './typeDefinition'
 import clsx from 'clsx';
@@ -42,12 +42,13 @@ const InventoryDetail = () => {
       }
 
     }
-
+    console.log("Inside useEffect, User Info is ", JSON.stringify(userInfo));
     fetchInventoryDetail()
   },[]);
 
   const addToCart = async () => {
     console.log("Inside addToCart Action");
+    console.log("User Info is ", JSON.stringify(userInfo));
     if (userInfo.isAuthenticated === false) {
       navigate('/login',{state:{from:location.pathname}});
     }
@@ -57,11 +58,15 @@ const InventoryDetail = () => {
         const addToCartAction = await axios.post('http://localhost:8000/api/addToCart', {
           user: userInfo.userId,
           inventory: inventoryDetail?.id,
-          quantity: addToCartQuantity
+          quantity: addToCartQuantity,
+          selectedColor
         });
-  
-        console.log("Add to Cart Response is ", addToCartAction.data);
-        navigate('/mycart');
+        
+        if (addToCartAction.status === 201) {
+          console.log("Add to Cart Response is ", addToCartAction.data);
+          navigate('/mycart', {state:{addToast:true}});
+
+        }
       }
       catch(error) {
         if (axios.isAxiosError(error)) {
@@ -77,9 +82,9 @@ const InventoryDetail = () => {
     return (
       inventoryDetail && 
       <div className='flex flex-col justify-center items-center border-3 p-[10px] rounded-sm m-[10px] w-[90%]'>
-        <div className='relative w-full flex-col justify-center items-center'>
-          <span className="text-5xl font-bold m-[5px]"><NavLink to={`/inventoryDetail/${id}`}>{inventoryDetail.title}</NavLink></span>
-          <span className="absolute left-[10px] text-[16px] font-bold "><NavLink to="/inventorysearchpage"><span>Search Page</span></NavLink></span>
+        <div className='relative w-full flex-col justify-center items-center m-[10px] mb-[10px]'>
+          <span className="text-5xl font-bold "><NavLink to={`/inventoryDetail/${id}`}>{inventoryDetail.title}</NavLink></span>
+          {/* <span className="absolute left-[10px] text-[16px] font-bold "><NavLink to="/inventorysearchpage"><span>Search Page</span></NavLink></span> */}
         </div>
           <div className='border-none rounded-sm overflow-hidden'><img src={`/${inventoryDetail.imageUrl}.jpg`} width={500} height={500} alt={inventoryDetail.category}/></div>
           <div><span>Name : </span>{inventoryDetail.name}</div>
@@ -95,7 +100,13 @@ const InventoryDetail = () => {
           <div><span>In Stock Quantity : </span>{inventoryDetail.quantity}</div>
           <div><span>Status : </span>{inventoryDetail.status}</div>
           <div><span>Seller : </span>{inventoryDetail.seller}</div>
-          <div><button onClick={addToCart}>Add to Cart</button></div>
+          <div>
+            <div>Add to Cart Quantity : <span className='m-[5px] text-xl font-bold'>{addToCartQuantity}</span><button className="m-[5px] font-bold" onClick={()=> setAddToCartQuantity(number=> {
+              if (number === 1) return 1
+              else return number -1
+            })}>-</button><button className="m-[5px] font-bold" onClick={()=> setAddToCartQuantity(number => number + 1)}>+</button></div>
+            <button className="disabled:opacity-20" disabled={ selectedColor === "" ? true : false} onClick={addToCart}>Add to Cart</button>
+          </div>
       </div>
     )
 };

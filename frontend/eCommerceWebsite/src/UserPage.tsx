@@ -1,5 +1,5 @@
 import React,{use, useContext, useEffect} from 'react'
-import { AuthenticationContext } from './App'
+import { AuthenticationContext } from './RootLayout'
 import { useNavigate } from 'react-router-dom';
 
 const UserPage = () => {
@@ -14,7 +14,7 @@ const UserPage = () => {
   }, [userInfo.isAuthenticated]);
 
   return (
-    <div className='text-5xl font-bold'>User Page</div>
+    <div className='text-5xl font-bold mt-[10px]'>{ userInfo.role === "Buyer" ? <span>Buyer Page</span> : userInfo.role === "Seller" && <span>Seller Page</span>}</div>
   )
 }
 

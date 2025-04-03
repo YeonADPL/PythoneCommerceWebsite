@@ -76,8 +76,8 @@ const AddToCartCard = ({id,title, name, rating, price,imageUrl,category,quantity
 
   return (
     <div key={id} className='flex flex-col justify-center items-center border-2 p-[10px] rounded-sm m-[10px]'>
-        <div><img src={`/${imageUrl}.jpg`} width={300} height={300} /></div>
-        <div><NavLink to={`/inventoryDetail/${id}`}>{title}</NavLink></div>
+        <div className='border-none rounded-sm overflow-hidden'><img src={`/${imageUrl}.jpg`} width={300} height={300} /></div>
+        <div className='text-2xl font-bold'><NavLink to={`/inventoryDetail/${id}`}>{title}</NavLink></div>
         <div>{name}</div>
         <div><span>Category : </span>{category}</div>
         <div>
