@@ -1,7 +1,10 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLoaderData } from 'react-router-dom';
 import Navbar from './Navbar';
 
 const RootLayout: React.FC = () => {
+
+  const inventoryCategory = useLoaderData() ;
+
   return (
     <div className='w-screen h-screen'>
       <div style={{ 
@@ -10,7 +13,7 @@ const RootLayout: React.FC = () => {
         padding: 0,
         boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
       }}>
-        <Navbar />
+        <Navbar categoryList = {inventoryCategory}/>
       </div>
       
       <div>

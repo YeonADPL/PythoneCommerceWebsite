@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import SearchInventoryComponent from './SearchInventoryComponent';
 import InventoryCard from './InventoryCard';
+import PaginationComponent from './PaginationComponent';
 
 const InventorySearchPage = () => {
 
@@ -47,13 +48,18 @@ const InventorySearchPage = () => {
 
   return (
     <div>
-        <div><SearchInventoryComponent categoryList={categoryList}/></div>
+        {/* <div><SearchInventoryComponent categoryList={categoryList}/></div> */}
         {
-            inventoryList && inventoryList.map((product:{id:number,title:string, name: string, price:number,imageUrl:string, rating:number, category:string,stockQuantity:number,color:string[]}) => {
-                return <InventoryCard key={product.id} id={product.id} title={product.title} name={product.name} price={product.price} imageUrl={product.imageUrl} rating={product.rating} category={product.category} stockQuantity={product.stockQuantity} color={product.color}/>
-            }
-            )
-        }
+            inventoryList && 
+            <PaginationComponent 
+                array={ inventoryList.map((product:{id:number,title:string, name: string, price:number,imageUrl:string, rating:number, category:string,stockQuantity:number,color:string[]}) => {
+                    return <InventoryCard key={product.id} id={product.id} title={product.title} name={product.name} price={product.price} imageUrl={product.imageUrl} rating={product.rating} category={product.category} stockQuantity={product.stockQuantity} color={product.color}/>
+                        }
+                
+                )
+                    }
+                itemsPerPage={5} />
+        } 
     </div>
   )
 }

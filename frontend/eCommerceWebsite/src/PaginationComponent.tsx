@@ -21,7 +21,8 @@ const PaginationComponent = ({array, itemsPerPage}:{array:React.ReactNode[], ite
     }
 
     return (
-        <div className='flex flex-col justify-between items-center gap-1 text-xl mt-[5px] w-full'>
+        <div className='relative flex flex-col justify-between items-center gap-1 text-xl mt-[20px] w-full'>
+            <div className='absolute left-[30px]'><span className='text-5xl text-bold'>{total}</span> Results</div>
             <div className='flex justify-center items-center gap-2'>
                 { numberOfButtons.length > 0 && <button className ='hover:cursor-pointer hover:bg-green-500 font-bold bg-green-300 rounded-sm p-[5px]' onClick={() => {
                 const max = Math.max.apply(null, numberOfButtons);

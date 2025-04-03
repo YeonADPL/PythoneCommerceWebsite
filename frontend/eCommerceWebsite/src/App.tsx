@@ -11,11 +11,13 @@ import { useState , createContext, SetStateAction} from 'react';
 import MyCart from './MyCart';
 import MyOrder from './MyOrder';
 import HistoricalOrders from './HistoricalOrders';
+import fetchInventoryCategory from './fetchInventoryCategory';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
+    loader: fetchInventoryCategory,
     children: [
       {
         index: true,

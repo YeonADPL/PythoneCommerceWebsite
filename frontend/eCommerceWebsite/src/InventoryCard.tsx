@@ -43,9 +43,9 @@ const InventoryCard = ({id,title, name, rating, price,imageUrl,category,stockQua
 
   }
   return (
-    <div key={id}className='border-3 p-[10px] rounded-sm m-[10px] flex flex-col justify-center items-center '>
+    <div key={id}className='border-3 p-[10px] rounded-sm m-[10px] flex flex-col justify-center items-center w-[90%] min-h-[500px] h-[600px]'>
         <div className='border-none rounded-sm overflow-hidden'><img src={`/${imageUrl}.jpg`} width={300} height={300} alt={category} /></div>
-        <div><NavLink to={`/inventoryDetail/${id}`}>{title}</NavLink></div>
+        <div className='text-3xl font-bold'><NavLink to={`/inventoryDetail/${id}`}>{title}</NavLink></div>
         <div>{name}</div>
         <div><span>Category : </span>{category}</div>
         <div><span>Color : </span>{color.map(c=> <button key={c} className={clsx(selectedColor === c ? "text-red-500" : "text-black")} onClick={()=> setSelectedColor(c)}>{c}</button>)}</div>
