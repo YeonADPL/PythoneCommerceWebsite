@@ -33,6 +33,7 @@ const InventoryCard = ({id,title, name, rating, price,imageUrl,category,stockQua
         
         if (addToCartAction.status === 201) {
           console.log("Add to Cart Response is ", addToCartAction.data);
+          setSelectedColor("");
           toast.success('Successfully Add to Cart!');
         }
       }

@@ -129,7 +129,7 @@ const MyCart = () => {
           }
         
         </div>
-        <div className='fixed bottom-0 h-[100px] w-full bg-cyan-300 border-5 rounded-sm flex justify-around items-center'>
+        { addToCartList.length > 0 && <div className='sticky bottom-0 h-[100px] w-full bg-cyan-300 border-5 rounded-sm flex justify-around items-center'>
             <div><span className='text-5xl'>Total Price : $</span></div> 
             <div>
                 <span className='text-6xl font-bold'>{
@@ -141,6 +141,7 @@ const MyCart = () => {
             <button onClick={makeOrder}>Make Order</button>
             <div ref={loaderRef} ></div>
         </div>
+        }
     </div>
   )
 }

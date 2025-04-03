@@ -2,7 +2,7 @@ import { NavLink} from 'react-router-dom';
 import { useState } from 'react';
 import { CartInterface } from './typeDefinition';
 import clsx from 'clsx';
-
+import { ShimmerButton } from "./components/magicui/shimmer-button";
 
 const AddToCartCard = ({id,title, name, rating, price,imageUrl,category,quantity,colorList, currentSelectedColor,cartList, setCartList}:{
     id:number,
@@ -89,12 +89,13 @@ const AddToCartCard = ({id,title, name, rating, price,imageUrl,category,quantity
         </div>
         <div><span>Rating : </span>{rating}</div>
         <div><span>$ </span>{price}</div>
-        <div>
-            <span>Quantity : </span><span>{quantity}</span>
-            <button onClick={increaseQuantity}><span className='text-3xl font-bold border-3 border-brown-500 w-11 h-11 shrink-0 grow-0 rounded-full'> + </span></button>
-            <button onClick={decreaseQuantity}><span className='text-3xl font-bold border-3 border-brown-500 aspect-square rounded-full'> - </span></button>
+        <div className='flex justify-center items-center gap-3'>
+            <span>Quantity : </span><span className='text-2xl font-bold'>{quantity}</span>
+            
+            <button onClick={decreaseQuantity}><span className='text-xl font-bold'> - </span></button> 
+            <button className='text-xl font-bold' onClick={increaseQuantity}> + </button> 
         </div>
-        <div><button onClick={removeAction} className='bg-red-500 p-[5px] border-2 border-red-500 rounded-sm text-3xl font-bold'>Remove</button></div>
+        <div><button onClick={removeAction} className='text-red-500 p-[5px] border-2 border-red-500 rounded-sm text-3xl font-bold m-[10px]'>Remove</button></div>
     </div>
   )
 }

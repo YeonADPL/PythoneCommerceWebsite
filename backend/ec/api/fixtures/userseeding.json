@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
           "username": "FirstSeller",
-          "password": "test",
+          "password": "pbkdf2_sha256$870000$KSMStVMrKrAUpNdvou6NNk$Ogn+397mXhy1z0/pJ1LpAoMdR6x+0WEdr+Oik03uhfA=",
           "age": 25,
           "sex" :"Male",
           "phoneNumber" : "0121234567",
