@@ -44,7 +44,7 @@ const InventoryDetail = () => {
     }
     console.log("Inside useEffect, User Info is ", JSON.stringify(userInfo));
     fetchInventoryDetail()
-  },[]);
+  },[id]);
 
   const addToCart = async () => {
     console.log("Inside addToCart Action");

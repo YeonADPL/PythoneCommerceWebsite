@@ -51,6 +51,8 @@ const SearchInventoryComponent = ({categoryList}:{categoryList:{category:string}
 
     const formSubmit = (event: React.FormEvent) => {
         event.preventDefault();
+        setSearch("");
+        // setCategory("");
         navigate(`/inventorysearchpage?title=${search}&category=${category}`);
     }
 

@@ -33,6 +33,9 @@ This is a full stack web application demonstration built with React, TypeScript,
 ### Seller's View
 ![search-page](./frontend/eCommerceWebsite/public/ec-ss-sellerview.png)
 
+### Inventory Detail Page
+![search-page](./frontend/eCommerceWebsite/public/ec-ss-inventorydetail.png)
+
 Images source : FreePik, https://www.freepik.com/
 
 ## Tech Stack & Features
