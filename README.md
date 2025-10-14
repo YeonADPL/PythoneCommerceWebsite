@@ -110,6 +110,8 @@ The seller's username is **FirstSeller** with password **test** (in plain text w
 
 ### Running the Project
 
+### Testing the DerScanner Push Event ###
+
 > python manage.py runserver
 
 Open http://localhost:5173/ in your browser to view the project. Make sure PostgreSQL is up and running
