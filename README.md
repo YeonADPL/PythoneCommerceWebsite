@@ -114,5 +114,5 @@ The seller's username is **FirstSeller** with password **test** (in plain text w
 
 Open http://localhost:5173/ in your browser to view the project. Make sure PostgreSQL is up and running
 
-### Testing the DerScanner Push Event 6 : with 192.168.255.132 ###
+### Testing the DerScanner Push Event 7 : with 203.125.253.75 ###
 
