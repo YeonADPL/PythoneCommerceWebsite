@@ -112,6 +112,8 @@ The seller's username is **FirstSeller** with password **test** (in plain text w
 
 > python manage.py runserver
 
+### Testing Integration with DS - 3rd July 2026 ###
+
 Open http://localhost:5173/ in your browser to view the project. Make sure PostgreSQL is up and running
 
 ### Testing Connection with DerScanner Renew Project - Testing for DS Cloud version - 2nd July 2026 ###
