@@ -29,7 +29,13 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+**/.env*
 
+# Default Python venv names
+.venv/
+venv/
+env/
+**/pythonvenv*
 
 # typescript
 *.tsbuildinfo
